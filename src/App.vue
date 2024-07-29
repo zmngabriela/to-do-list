@@ -1,5 +1,8 @@
 <script setup>
-import { reactive } from "vue";
+  import { reactive } from "vue";
+  import Head from './components/Head.vue';
+  import Forms from './components/Forms.vue';
+  import Todo from './components/Todo.vue';
 
   const estado = reactive({
     filtro: 'todas',
@@ -23,7 +26,7 @@ import { reactive } from "vue";
   const getTarefasPendentes = () => {
     // ! e a mesma coisa que tarefa.finalizada === false)
     return estado.tarefas.filter(tarefa => !tarefa.finalizada)
-  } // a gente poderia ja passar o lenght aqui pro pra retornar somente o numero de tarefas pendentes, mas vamos reaproveitar essa funcao pra outras paradas
+  } // a gente poderia ja passar o length aqui pro pra retornar somente o numero de tarefas pendentes, mas vamos reaproveitar essa funcao pra outras paradas
 
   const getTarefasFinalizadas = () => {
     // ! e a mesma coisa que tarefa.finalizada === false)
@@ -55,44 +58,8 @@ import { reactive } from "vue";
 
 <template>
   <div class="container">
-    <header class="p-5 mb-4 mt-4 bg-light rounded-3">
-      <h1>Minhas tarefas</h1>
-      <p>
-        Você possui {{ getTarefasPendentes().length }} tarefas pendentes
-      </p>
-    </header>
-    <form @submit.prevent="cadastraTarefa">
-      <div class="row">
-        <div class="col">
-          <input :value="estado.tarefaTemp" required @change="evento => estado.tarefaTemp = evento.target.value" type="text" placeholder="Digite aqui a descriçao da tarefa" class="form-control">
-        </div>
-        <div class="col-md-2">
-          <button class="btn btn-primary" type="submit">Cadastrar</button>
-        </div>
-        <div class="col-md-2">
-          <select @change="evento => evento.filtro = evento.target.value" class="form-control">
-            <option value="todas">Todas tarefas</option>
-            <option value="pendentes">Pendentes</option>
-            <option value="finalizadas">Finalizadas</option>
-          </select>
-        </div>
-      </div>
-    </form>
-    <ul class="list-group mt-4">
-      <li class="list-group-item" v-for="tarefa in getTarefasFiltradas()" :key="tarefa.titulo">
-        <!-- pra fazer checkbox selecionar quando a finalizada for true: -->
-        <input @change="evento => tarefa.finalizada = evento.target.checked" :checked="tarefa.finalizada" :id="tarefa.titulo" type="checkbox">
-        <!-- pra fazer a classe done ser valida somente quando a tarefa e finalizada for true **o === true e opcional  -->
-        <label :class="{ done: tarefa.finalizada === true }" class="ms-3" :for="tarefa.titulo">
-          {{ tarefa.titulo }}
-        </label>
-      </li>
-    </ul>
+    <Head :tarefas-pendentes="getTarefasPendentes().length"></Head>
+    <Forms :tarefa-temp="estado.tarefaTemp" :edita-tarefa-temp="evento => estado.tarefaTemp = evento.target.value" :cadastra-tarefa="cadastraTarefa" :trocar-filtro="evento => estado.filtro = evento.target.value"></Forms>
+    <Todo :tarefas="getTarefasFiltradas()"></Todo>
   </div>
 </template>
-
-<style scoped>
-.done {
-  text-decoration: line-through;
-}
-</style>
