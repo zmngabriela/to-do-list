@@ -1,3 +1,11 @@
+<!-- Npm init vue@latest
+Cd .. /pastavue
+Git init
+Npm install
+Npm run dev
+Fazer commit e criar repositório no github e vincular ao projeto
+Limpar as coisas do vue -->
+
 <script setup>
   import { reactive } from "vue";
   import Head from './components/Head.vue';
