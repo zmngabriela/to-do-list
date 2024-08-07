@@ -1,9 +1,9 @@
 <script setup>
-    const props = defineProps(['tarefas']);
+    const props = defineProps(['tarefas', 'tarefasPendentes']);
 </script>
 
 <template>
-    <ul class="list-group mt-4">
+    <ul v-if="props.getTarefasPendentes > 0" class="list-group mt-4">
         <!-- <li class="list-group-item" v-for="tarefa in getTarefasFiltradas()" :key="tarefa.titulo"> -->
         <li class="list-group-item" v-for="tarefa in props.tarefas" :key="tarefa.titulo">
             <!-- pra fazer checkbox selecionar quando a finalizada for true: -->
@@ -15,7 +15,7 @@
             </label>
         </li>
     </ul>
-    <!-- <p v-else class="mt-5 ms-5">Voce nao tem tarefas pendentes</p> -->
+    <p v-else class="mt-5 ms-5">Voce nao tem tarefas pendentes</p>
 </template>
 
 <style scoped>
