@@ -1,9 +1,9 @@
 <script setup>
-  import { reactive } from "vue";
-  import Head from './components/Head.vue';
-  import Forms from './components/Forms.vue';
-  import ToDo from './components/ToDo.vue';
-
+  import { reactive } from "vue"
+  import Head from './components/Head.vue'
+  import Forms from './components/Forms.vue'
+  import ToDo from "./components/ToDo.vue";
+  
   const state = reactive({
     filter: 'all',
     tempTask: '',
