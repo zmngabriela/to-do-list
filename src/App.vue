@@ -1,73 +1,69 @@
-<!-- Npm init vue@latest
-Cd .. /pastavue
-Git init
-Npm install
-Npm run dev
-Fazer commit e criar repositório no github e vincular ao projeto
-Limpar as coisas do vue -->
-
 <script setup>
   import { reactive } from "vue";
   import Head from './components/Head.vue';
   import Forms from './components/Forms.vue';
-  import Todo from './components/Todo.vue';
+  import ToDo from './components/ToDo.vue';
 
-  const estado = reactive({
-    filtro: 'todas',
-    tarefaTemp: '',
-    tarefas: [
+  const state = reactive({
+    filter: 'all',
+    tempTask: '',
+    tasks: [
       {
-        titulo: 'Estudar VueJS',
-        finalizada: false,
+        title: 'Study VueJS',
+        concluded: false,
       },
       {
-        titulo: 'Estudar React',
-        finalizada: false,
+        title: 'Study React',
+        concluded: false,
       },
       {
-        titulo: 'Estudar Backend',
-        finalizada: true,
+        title: 'Study Backend',
+        concluded: true,
       },
     ]
   })
 
-  const getTarefasPendentes = () => {
-    // ! e a mesma coisa que tarefa.finalizada === false)
-    return estado.tarefas.filter(tarefa => !tarefa.finalizada)
-  } // a gente poderia ja passar o length aqui pro pra retornar somente o numero de tarefas pendentes, mas vamos reaproveitar essa funcao pra outras paradas
-
-  const getTarefasFinalizadas = () => {
-    // ! e a mesma coisa que tarefa.finalizada === false)
-    return estado.tarefas.filter(tarefa => tarefa.finalizada)
+  // we could already return de lenght but this function is going to be reused for different purposes
+  const getPendingTasks = () => {
+    return state.tasks.filter(tasks => !tasks.concluded)
+  } 
+  
+  const getConcludedTasks = () => {
+    return state.tasks.filter(tasks => tasks.concluded)
   }
 
-  const getTarefasFiltradas = () => {
-    const { filtro } = estado;
+  const getFilteredTasks = () => {
+    const { filter } = state;
 
-    switch (filtro) {
-      case 'pendentes':
-        return getTarefasPendentes();
-      case 'finalizadas':
-        return getTarefasFinalizadas();
+    switch (filter) {
+      case 'pending':
+        return getPendingTasks();
+      case 'concluded':
+        return getConcludedTasks();
       default:
-        return estado.tarefas;
+        return state.tasks;
     }
   }
 
-  const cadastraTarefa = () => {
-    const tarefaNova = {
-      titulo: estado.tarefaTemp,
-      finalizada: false,
+  const addTask = () => {
+    const newTask = {
+      title: state.tempTask,
+      concluded: false,
     }
-    estado.tarefas.push(tarefaNova);
-    estado.tarefaTemp = '';
+    state.tasks.push(newTask);
+    state.tempTask = '';
   }
 </script>
 
 <template>
   <div class="container">
-    <Head :tarefas-pendentes="getTarefasPendentes().length"></Head>
-    <Forms :tarefa-temp="estado.tarefaTemp" :edita-tarefa-temp="evento => estado.tarefaTemp = evento.target.value" :cadastra-tarefa="cadastraTarefa" :trocar-filtro="evento => estado.filtro = evento.target.value"></Forms>
-    <Todo :tarefas="getTarefasFiltradas()"></Todo>
+    <Head :pending-tasks="getPendingTasks().length"></Head>
+    <Forms 
+      :temp-task="state.tempTask" 
+      :edit-temp-task="e => state.tempTask = e.target.value" 
+      :add-task="addTask" 
+      :change-filter="e => state.filter = e.target.value">
+    </Forms>
+    <ToDo :tasks="getFilteredTasks()"></ToDo>
   </div>
 </template>

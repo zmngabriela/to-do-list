@@ -1,3 +1,13 @@
+# VueJS config
+
+npm init vue@latest
+cd .. /foldervue
+git init
+npm install
+npm run dev
+commit, git init and connect to remote repo
+clean vue basic files and create
+
 # todolist-vue
 
 This template should help get you started developing with Vue 3 in Vite.

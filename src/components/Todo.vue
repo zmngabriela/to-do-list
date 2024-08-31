@@ -1,21 +1,16 @@
 <script setup>
-    const props = defineProps(['tarefas', 'tarefasPendentes']);
+    const props = defineProps(['tasks']);
 </script>
 
 <template>
-    <ul v-if="props.getTarefasPendentes > 0" class="list-group mt-4">
-        <!-- <li class="list-group-item" v-for="tarefa in getTarefasFiltradas()" :key="tarefa.titulo"> -->
-        <li class="list-group-item" v-for="tarefa in props.tarefas" :key="tarefa.titulo">
-            <!-- pra fazer checkbox selecionar quando a finalizada for true: -->
-            <input @change="evento => tarefa.finalizada = evento.target.checked" :checked="tarefa.finalizada"
-                :id="tarefa.titulo" type="checkbox">
-            <!-- pra fazer a classe done ser valida somente quando a tarefa e finalizada for true **o === true e opcional  -->
-            <label :class="{ done: tarefa.finalizada === true }" class="ms-3" :for="tarefa.titulo">
-                {{ tarefa.titulo }}
+    <ul class="list-group mt-4">
+        <li class="list-group-item" v-for="task in props.tasks" :key="task.title">
+            <input @change="e => task.concluded = e.target.checked" :checked="task.concluded" :id="task.title" type="checkbox">
+            <label :class="{ done: task.concluded }" class="ms-3" :for="task.title">
+                {{ task.title }}
             </label>
         </li>
     </ul>
-    <p v-else class="mt-5 ms-5">Voce nao tem tarefas pendentes</p>
 </template>
 
 <style scoped>
