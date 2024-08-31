@@ -2,7 +2,7 @@
   import { reactive } from "vue"
   import Head from './components/Head.vue'
   import Forms from './components/Forms.vue'
-  import ToDo from "./components/ToDo.vue";
+  import ToDo from './components/Todo.vue'
 
   const state = reactive({
     filter: 'all',
