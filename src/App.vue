@@ -3,7 +3,7 @@
   import Head from './components/Head.vue'
   import Forms from './components/Forms.vue'
   import ToDo from "./components/ToDo.vue";
-  
+
   const state = reactive({
     filter: 'all',
     tempTask: '',
@@ -23,7 +23,6 @@
     ]
   })
 
-  // we could already return de lenght but this function is going to be reused for different purposes
   const getPendingTasks = () => {
     return state.tasks.filter(tasks => !tasks.concluded)
   } 
